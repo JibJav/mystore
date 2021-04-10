@@ -1,0 +1,53 @@
+entity Product {
+	name String required,
+    brand String required,
+    status AvailableStatus,
+	ordarDate Instant,
+	price Long,
+	quantity Integer
+}
+entity Customer {
+	name String required,
+  address String required,
+  timestamp Instant required
+}
+entity Store {
+	name String required,
+  address String required,
+  timestamp Instant required
+}
+entity Ordar {
+  ordarwithname String required,
+  ordarId Long required,
+  status OrdarStatus ,
+  ordarDate Instant,
+  amount Long,
+  totalItems Integer
+}
+enum OrdarStatus {
+	DELIVERED, NOT_SHIPPED, INPROCESSING
+}
+enum AvailableStatus {
+	AVAILABLE, NOT_AVAILABLE, OUT_OF_STOCK
+}
+relationship ManyToMany {
+	Customer{product(name)} to Product{customer}
+	Ordar{product(name)} to  Product{ordar}
+}
+relationship ManyToOne {
+	Store{user(login)} to User
+}
+
+    relationship OneToOne {
+        Customer{user(login) required} to User
+    }
+
+relationship OneToMany {
+	Store{ordar(ordarwithname)} to Ordar
+    Customer{ordar(ordarwithname)} to Ordar{customer}
+}
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+// Set service options to all except few
+service all with serviceImpl
+filter all
