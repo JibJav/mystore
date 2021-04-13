@@ -1,0 +1,75 @@
+{
+  "name": "Ordar",
+  "fields": [
+    {
+      "fieldName": "ordarwithname",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ordarId",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "OrdarStatus",
+      "fieldValues": "DELIVERED,NOT_SHIPPED,INPROCESSING"
+    },
+    {
+      "fieldName": "ordarDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "totalItems",
+      "fieldType": "Integer"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "ordar",
+      "relationshipValidateRules": "required",
+      "relationshipName": "user",
+      "otherEntityField": "login"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "ordar",
+      "relationshipName": "product",
+      "otherEntityField": "name",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "store",
+      "otherEntityRelationshipName": "ordar",
+      "relationshipName": "store",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "customer",
+      "otherEntityRelationshipName": "ordar",
+      "relationshipName": "customer",
+      "otherEntityField": "id"
+    }
+  ],
+  "changelogDate": "20210410030647",
+  "entityTableName": "ordar",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": true,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "clientRootFolder": "",
+  "applications": "*"
+}

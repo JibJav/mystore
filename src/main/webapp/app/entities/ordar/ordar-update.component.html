@@ -1,0 +1,119 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-ordar-heading">Create or edit a Ordar</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ordarwithname">Ordarwithname</label>
+                    <input type="text" class="form-control" name="ordarwithname" id="field_ordarwithname"
+                           formControlName="ordarwithname"/>
+                    <div *ngIf="editForm.get('ordarwithname')!.invalid && (editForm.get('ordarwithname')!.dirty || editForm.get('ordarwithname')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('ordarwithname')?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ordarId">Ordar Id</label>
+                    <input type="number" class="form-control" name="ordarId" id="field_ordarId"
+                           formControlName="ordarId"/>
+                    <div *ngIf="editForm.get('ordarId')!.invalid && (editForm.get('ordarId')!.dirty || editForm.get('ordarId')!.touched)">
+                        <small class="form-text text-danger"
+                               *ngIf="editForm.get('ordarId')?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.get('ordarId')?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_status">Status</label>
+                    <select class="form-control" name="status" formControlName="status" id="field_status">
+                        <option value="DELIVERED">DELIVERED</option>
+                        <option value="NOT_SHIPPED">NOT_SHIPPED</option>
+                        <option value="INPROCESSING">INPROCESSING</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_ordarDate">Ordar Date</label>
+                    <div class="d-flex">
+                        <input id="field_ordarDate" type="datetime-local" class="form-control" name="ordarDate" formControlName="ordarDate" placeholder="YYYY-MM-DD HH:mm"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                           formControlName="amount"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_totalItems">Total Items</label>
+                    <input type="number" class="form-control" name="totalItems" id="field_totalItems"
+                           formControlName="totalItems"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_user">User</label>
+                    <select class="form-control" id="field_user" name="user" formControlName="userId">
+                        <option *ngIf="!editForm.get('userId')!.value" [ngValue]="null" selected></option>
+                        <option [ngValue]="userOption.id" *ngFor="let userOption of users; trackBy: trackById">{{ userOption.login }}</option>
+                    </select>
+                </div>
+                <div *ngIf="editForm.get('userId')!.invalid && (editForm.get('userId')!.dirty || editForm.get('userId')!.touched)">
+                    <small class="form-text text-danger"
+                           *ngIf="editForm.get('userId')?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+
+                <div class="form-group">
+                    <label for="field_products">Product</label>
+                    <select class="form-control" id="field_products" multiple name="products" formControlName="products">
+                        <option [ngValue]="getSelected(editForm.get('products')!.value, productOption)" *ngFor="let productOption of products; trackBy: trackById">{{ productOption.name }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_store">Store</label>
+                    <select class="form-control" id="field_store" name="store" formControlName="storeId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="storeOption.id" *ngFor="let storeOption of stores; trackBy: trackById">{{ storeOption.id }}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_customer">Customer</label>
+                    <select class="form-control" id="field_customer" name="customer" formControlName="customerId">
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="customerOption.id" *ngFor="let customerOption of customers; trackBy: trackById">{{ customerOption.id }}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

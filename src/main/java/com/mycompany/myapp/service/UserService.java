@@ -119,6 +119,11 @@ public class UserService {
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
+        
+//        Set<Authority> authorities2 = new HashSet<>();
+//        authorityRepository.findById(AuthoritiesConstants.MANAGER).ifPresent(authorities::add);
+//        newUser.setAuthorities(authorities2);
+        
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);

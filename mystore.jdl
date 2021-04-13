@@ -6,16 +6,19 @@ entity Product {
 	price Long,
 	quantity Integer
 }
+
 entity Customer {
-	name String required,
+  name String required,
   address String required,
   timestamp Instant required
 }
+
 entity Store {
-	name String required,
+  name String required,
   address String required,
   timestamp Instant required
 }
+
 entity Ordar {
   ordarwithname String required,
   ordarId Long required,
@@ -24,24 +27,27 @@ entity Ordar {
   amount Long,
   totalItems Integer
 }
+
 enum OrdarStatus {
 	DELIVERED, NOT_SHIPPED, INPROCESSING
 }
+
 enum AvailableStatus {
 	AVAILABLE, NOT_AVAILABLE, OUT_OF_STOCK
 }
+
 relationship ManyToMany {
 	Customer{product(name)} to Product{customer}
 	Ordar{product(name)} to  Product{ordar}
 }
+
 relationship ManyToOne {
-	Store{user(login)} to User
+	// Store{user(login)} to User
+	Ordar{user(login) required} to User
 }
-
-    relationship OneToOne {
-        Customer{user(login) required} to User
-    }
-
+relationship OneToOne {
+	Customer{user(login) required} to User
+}
 relationship OneToMany {
 	Store{ordar(ordarwithname)} to Ordar
     Customer{ordar(ordarwithname)} to Ordar{customer}
@@ -50,4 +56,5 @@ relationship OneToMany {
 dto * with mapstruct
 // Set service options to all except few
 service all with serviceImpl
+
 filter all

@@ -1,0 +1,72 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="ordar">
+            <h2><span>Ordar</span> {{ ordar.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span>Ordarwithname</span></dt>
+                <dd>
+                    <span>{{ ordar.ordarwithname }}</span>
+                </dd>
+                <dt><span>Ordar Id</span></dt>
+                <dd>
+                    <span>{{ ordar.ordarId }}</span>
+                </dd>
+                <dt><span>Status</span></dt>
+                <dd>
+                    <span>{{ ordar.status }}</span>
+                </dd>
+                <dt><span>Ordar Date</span></dt>
+                <dd>
+                    <span>{{ ordar.ordarDate }}</span>
+                </dd>
+                <dt><span>Amount</span></dt>
+                <dd>
+                    <span>{{ ordar.amount }}</span>
+                </dd>
+                <dt><span>Total Items</span></dt>
+                <dd>
+                    <span>{{ ordar.totalItems }}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    {{ ordar.userLogin }}
+                </dd>
+                <dt><span>Product</span></dt>
+                <dd>
+                    <span *ngFor="let product of ordar.products; let last = last">
+                        <a [routerLink]="['/product', product?.id, 'view']">{{ product.name }}</a>{{ last ? '' : ', ' }}
+                    </span>
+                </dd>
+                <dt><span>Store</span></dt>
+                <dd>
+                    <div *ngIf="ordar.storeId">
+                        <a [routerLink]="['/store', ordar.storeId, 'view']">{{ ordar.storeId }}</a>
+                    </div>
+                </dd>
+                <dt><span>Customer</span></dt>
+                <dd>
+                    <div *ngIf="ordar.customerId">
+                        <a [routerLink]="['/customer', ordar.customerId, 'view']">{{ ordar.customerId }}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/ordar', ordar.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
